@@ -11,7 +11,7 @@ def main():
 
     value = list()
     value.append(str(numpy.random.uniform(-3,3))+'E+03') #M_1
-    value.append(str(random.choice([numpy.random.uniform(-3,-1), numpy.random.uniform(1,3)]))+'E03') #M_2    ERROR
+    value.append(str(random.choice([numpy.random.uniform(-3,-0.1), numpy.random.uniform(0.1,3)]))+'E03') #M_2    ERROR
     value.append(str(numpy.random.uniform(0,3))+'E+03')  #M_3
     value.append(str(numpy.random.uniform(-7,7))+'E+03') #A_t
     value.append(str(numpy.random.uniform(-7,7))+'E+03') #A_b
@@ -19,7 +19,7 @@ def main():
     value.append('#') #A_u
     value.append('#') #A_d
     value.append('#') #A_e
-    value.append(str(random.choice([numpy.random.uniform(-3,-1), numpy.random.uniform(1,3)]))+'E+03') #mu    ERROR
+    value.append(str(random.choice([numpy.random.uniform(-3,-0.1), numpy.random.uniform(0.1,3)]))+'E+03') #mu    ERROR
     value.append(str(numpy.random.uniform(0,3))+'E+03') #MA_pole
     value.append(str(numpy.random.uniform(0.2,6))+'E+01') #tanbeta
     value.append(str(numpy.random.uniform(0,3))+'E+03')  #M_eL
@@ -28,10 +28,10 @@ def main():
     value.append(str(numpy.random.uniform(0,3))+'E+03') #M_eR
     value.append(value[15])                 #M_muR
     value.append(str(numpy.random.uniform(0,3))+'E+03') #M_tauR
-    value.append(str(numpy.random.uniform(1,3))+'E+03') #M_q1L   ERROR
+    value.append(str(numpy.random.uniform(0.1,3))+'E+03') #M_q1L   ERROR
     value.append(value[18])                 #M_q2L
     value.append(str(numpy.random.uniform(0,3))+'E+03') #M_q3L
-    value.append(str(numpy.random.uniform(1,3))+'E+03') #M_uR    ERROR
+    value.append(str(numpy.random.uniform(0.1,3))+'E+03') #M_uR    ERROR
     value.append(value[21])                 #M_cR
     value.append(str(numpy.random.uniform(0,3))+'E+03') #M_tR
     value.append(str(numpy.random.uniform(0,3))+'E+03') #M_dR

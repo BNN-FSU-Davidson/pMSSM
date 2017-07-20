@@ -54,9 +54,6 @@ do
     cd ..
     cp ./point$i/prospino.dat ./pro$i.dat
     rm -R ./point$i
-    cd ..
-    python datagroup_increment.py $name $i
-    cd ./prospino
     echo $i/$number Prospino Calculations Complete
     i=$(($i+1))
 done
@@ -64,6 +61,8 @@ done
 cd ..
 
 echo All Prospino Calculations Complete
+
+python datagroup.py $name $number #consolidate output into one file
 
 rm -R ./susyhit
 rm -R ./prospino
