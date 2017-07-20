@@ -1,5 +1,31 @@
 #!/bin/bash
 
+usage="$(basename "$0") [Flag] [Name] [Number] -- Program to generate pMSSM predictions
+
+    Name    The name of the datafile to be created
+    Number  An integer value of points to be generated
+
+    Flags:
+      -h    Display this message
+      -b    Enable batch datagrouping (currently non-functional)"
+
+while getopts ':hs:' option; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    :) printf "missing argument for -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+  esac
+done
+shift "$((OPTIND - 1))"
+
 name=$1 #first argument is the number
 
 number=$2 #second argument is the filename
