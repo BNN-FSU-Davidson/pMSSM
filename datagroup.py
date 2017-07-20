@@ -21,7 +21,7 @@ def main():
         outfile.write("{0:>14}".format(row.split()[14]))
         outfile.write("\n")
     else:
-        outfile = open(str(name), 'a') #open datafile
+        outfile = open('../'+str(name), 'a') #open datafile
 
 
     row = linecache.getline('./pro'+str(num)+'.dat',1)
