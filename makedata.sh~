@@ -55,8 +55,6 @@ do
     cp ./point$i/prospino.dat ./pro$i.dat
     rm -R ./point$i
     python ../datagroup.py $name $i
-    rm ./pro$i.dat
-    rm ../susy/sus$i.dat
     echo $i/$number Prospino Calculations Complete
     i=$(($i+1))
 done
@@ -65,6 +63,7 @@ cd ..
 
 echo All Prospino Calculations Complete
 
+mv ./pros/$name ./$name
 rm -R ./susy
 rm -R ./pros
 
