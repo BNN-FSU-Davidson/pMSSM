@@ -5,7 +5,7 @@ usage="$(basename "$0") [Flag] [Name] [Number] -- Program to generate pMSSM pred
     Name    The name of the datafile to be created
     Number  An integer value of points to be generated
 
-    Flags:
+    Flags(optional):
       -h    Display this message
       -b    Enable batch datagrouping (currently non-functional)"
 
