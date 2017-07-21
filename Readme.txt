@@ -34,4 +34,4 @@ Usage: makedata.sh [FLAG] [NAME] [NUMBER]
 
      Flags(optional):
        -h     Display help message
-       -b     Enable batch datagrouping (currently non-functional) 
+       -b     Enable batch datagrouping 

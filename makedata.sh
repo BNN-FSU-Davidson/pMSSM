@@ -1,5 +1,7 @@
 #!/bin/bash
 
+b=0
+
 usage="$(basename "$0") [Flag] [Name] [Number] -- Program to generate pMSSM predictions
 
     Name    The name of the datafile to be created
@@ -7,12 +9,14 @@ usage="$(basename "$0") [Flag] [Name] [Number] -- Program to generate pMSSM pred
 
     Flags(optional):
       -h    Display this message
-      -b    Enable batch datagrouping (currently non-functional)"
+      -b    Enable batch datagrouping"
 
-while getopts ':hs:' option; do
+while getopts ':hb:' option; do
   case "$option" in
     h) echo "$usage"
        exit
+       ;;
+    b) b=1
        ;;
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
@@ -23,12 +27,13 @@ while getopts ':hs:' option; do
        exit 1
        ;;
   esac
+shift "$((OPTIND - 2))"
 done
-shift "$((OPTIND - 1))"
 
-name=$1 #first argument is the number
 
-number=$2 #second argument is the filename
+name=$1 #first argument is the name
+
+number=$2 #second argument is the number
 
 i=1
 while [ "$i" -le "$number" ];
@@ -71,27 +76,55 @@ echo All Susyhit Calculations Complete
 
 cd ./pros
 
-i=1
-while [ "$i" -le "$number" ];
-do
-    #run prospino and copy output
-    cd ./point$i/
-    ./prospino_2.run > /dev/null
+if [ "$b" = "1" ]
+then
+    i=1
+    while [ "$i" -le "$number" ];
+    do
+	#run prospino and copy output
+	cd ./point$i/
+	./prospino_2.run > /dev/null
+	cd ..
+	cp ./point$i/prospino.dat ./pro$i.dat
+	rm -R ./point$i
+	echo $i/$number Prospino Calculations Complete
+	i=$(($i+1))
+    done
+
     cd ..
-    cp ./point$i/prospino.dat ./pro$i.dat
-    rm -R ./point$i
-    python ../datagroup.py $name $i
-    rm ./pro$i.dat
-    rm ../susy/sus$i.dat
-    echo $i/$number Prospino Calculations Complete
-    i=$(($i+1))
-done
 
-cd ..
+    echo All Prospino Calculations Complete
 
-echo All Prospino Calculations Complete
+    python datagroup.py_batch $name $number #consolidate output into one file
 
-rm -R ./susy
-rm -R ./pros
+    rm -R ./susy
+    rm -R ./pros
 
-echo Temporary Files Cleaned and Output Written to $name
+    echo Temporary Files Cleaned and Output Written to $name
+
+else
+    i=1
+    while [ "$i" -le "$number" ];
+    do
+	#run prospino and copy output
+	cd ./point$i/
+	./prospino_2.run > /dev/null
+	cd ..
+	cp ./point$i/prospino.dat ./pro$i.dat
+	rm -R ./point$i
+	python ../datagroup.py $name $i
+	rm ./pro$i.dat
+	rm ../susy/sus$i.dat
+	echo $i/$number Prospino Calculations Complete
+	i=$(($i+1))
+    done
+
+    cd ..
+
+    echo All Prospino Calculations Complete
+
+    rm -R ./susy
+    rm -R ./pros
+
+    echo Temporary Files Cleaned and Output Written to $name
+fi
