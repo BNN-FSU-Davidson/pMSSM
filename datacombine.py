@@ -9,7 +9,7 @@
 #------------------------------------------------------------------------
 
 import sys
-import linecache
+import os
 
 def main():
     name = sys.argv[1] #name of datafiles to read
@@ -18,11 +18,12 @@ def main():
     outfile = open('./'+str(name)+'.dat', 'w')
 
     for i in range(num):
-        infile = open('./'+str(name)+str(i+1)+'.dat', 'r')
-        content = infile.read()
+        infile = open('./'+str(name)+str(i+1)+'.dat', 'r') #open a datafile
+        content = infile.read() #read its contents
         infile.close()
+	os.remove(infile) #delete the infile
 
-        outfile.write(content)
+        outfile.write(content) #write the contents to the output file
 
         
 main()
