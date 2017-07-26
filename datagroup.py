@@ -1,4 +1,12 @@
-#!/usr/bin/env python
+#------------------------------------------------------------------------
+#datagroup.py, a code written by Karbo in the summer of 2017.
+#This code reads the data out of the individual susyhit and prospino datafiles
+#and writes them into one document.
+#The field takes two arguments, the name of the datafile to create and the
+#number of the datafile to read.
+#This version is called after every data point so the data in written incrementally.
+#------------------------------------------------------------------------
+
 
 import sys
 import linecache

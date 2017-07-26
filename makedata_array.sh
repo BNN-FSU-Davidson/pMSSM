@@ -1,10 +1,12 @@
 #!/bin/bash
 
 #------------------------------------------------------------------------
-#makedata.sh, a code written by Karbo in the summer of 2017.
+#makedata_array.sh, a code written by Karbo in the summer of 2017.
 #This code generates pMSSM datapoints using the programs susyhit and prospino. 
-#The program takes two arguments. First the name of the datafiel to be written,
-#and second the number of points to be generated. 
+#The program takes three arguments. First the name of the datafile to be written, second the number of points to be generated, and finally a shift based on the
+#job array id. This shift makes sure that the jobs are not trying to process points
+#with the same numerical identifiers.
+#This version is optimized to be run as a job array on an hpc.
 #This file relies on pointchange.py and datagroup.py. 
 #View Readme.txt for more info.
 #------------------------------------------------------------------------
@@ -27,7 +29,7 @@ Program Aborted"
 
 while getopts ':hb:a:' option; do
   case "$option" in
-mv     h) echo "$usage"
+    h) echo "$usage"
        exit
        ;;
     b) b=1
@@ -57,12 +59,11 @@ name=$1 #first argument is the name
 
 number=$2 #second argument is the number
 
-i=1
-if [ "$a" = "1" ]
-then
-    i=2
-fi
-while [ "$i" -le "$number" ];
+shift=0 #no shift by default
+shift=$3 #third argument shifts the points over
+
+i=$((1+$shift))
+while [ "$i" -le "$(($number+$shift))" ];
 do
     #make directories and copy files
     mkdir -p ./susy/point$i
@@ -71,24 +72,13 @@ do
     cp ./susyhit/suspect2_lha.in ./susy/point$i
     cp ./susyhit/susyhit.in ./susy/point$i
     cp -R ./prospino/* ./pros/point$i
-    
+
     #change the inputs for susyhit
     python pointchange.py ./susy/point$i/suspect2_lha.in
     echo $i/$number Points Created
-    i=$(($i+1))
-done
 
-echo All Points Created
+    cd ./susy
 
-cd ./susy
-
-i=1
-if [ "$a" = "1" ]
-then
-    i=2
-fi
-while [ "$i" -le "$number" ];
-do
     #run susyhit and copy output
     cd ./point$i/ 
     ./run > /dev/null
@@ -97,64 +87,21 @@ do
     mv ./point$i/susyhit_slha.out ./../pros/point$i/prospino.in.les_houches
     rm -R ./point$i
     echo $i/$number Susyhit Calculations Complete
+
+    cd ../pros
+
+    #run prospino and copy output
+    cd ./point$i/
+    ./prospino_2.run > /dev/null
+    cd ..
+    cp ./point$i/prospino.dat ./pro$i.dat
+    rm -R ./point$i
+    python ../datagroup.py $name $i
+    rm ./pro$i.dat
+    rm ../susy/sus$i.dat
+    echo $i/$number Prospino Calculations Complete
+    cd ..
+
     i=$(($i+1))
-done
 
-cd ..
-
-echo All Susyhit Calculations Complete
-
-cd ./pros
-
-if [ "$b" = "1" ]
-then
-    i=1
-    while [ "$i" -le "$number" ];
-    do
-	#run prospino and copy output
-	cd ./point$i/
-	./prospino_2.run > /dev/null
-	cd ..
-	cp ./point$i/prospino.dat ./pro$i.dat
-	rm -R ./point$i
-	echo $i/$number Prospino Calculations Complete
-	i=$(($i+1))
     done
-
-    cd ..
-
-    echo All Prospino Calculations Complete
-
-    python datagroup.py_batch $name $number #consolidate output into one file
-
-    rm -R ./susy
-    rm -R ./pros
-
-    echo Temporary Files Cleaned and Output Written to $name
-
-else
-    i=1
-    while [ "$i" -le "$number" ];
-    do
-	#run prospino and copy output
-	cd ./point$i/
-	./prospino_2.run > /dev/null
-	cd ..
-	cp ./point$i/prospino.dat ./pro$i.dat
-	rm -R ./point$i
-	python ../datagroup.py $name $i
-	rm ./pro$i.dat
-	rm ../susy/sus$i.dat
-	echo $i/$number Prospino Calculations Complete
-	i=$(($i+1))
-    done
-
-    cd ..
-
-    echo All Prospino Calculations Complete
-
-    rm -R ./susy
-    rm -R ./pros
-
-    echo Temporary Files Cleaned and Output Written to $name
-fi
