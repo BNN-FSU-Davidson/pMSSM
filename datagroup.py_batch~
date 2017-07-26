@@ -2,7 +2,7 @@
 #datagroup.py_batch, a code written by Karbo in the summer of 2017.
 #This code reads the data out of the individual susyhit and prospino datafiles
 #and writes them into one document.
-#The file takes two arguments, the name of the datafile to create and the
+#The field takes two arguments, the name of the datafile to create and the
 #number of the datafile to read.
 #This version is called after all of the data is generated so it writes in
 #a batch.

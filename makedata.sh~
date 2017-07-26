@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------
 #makedata.sh, a code written by Karbo in the summer of 2017.
 #This code generates pMSSM datapoints using the programs susyhit and prospino. 
-#The program takes two arguments. First the name of the datafile to be written,
+#The program takes two arguments. First the name of the datafiel to be written,
 #and second the number of points to be generated. 
 #This file relies on pointchange.py and datagroup.py. 
 #View Readme.txt for more info.
