@@ -1,11 +1,4 @@
-#------------------------------------------------------------------------
-#pointchange.py, a code written by Karbo in the summer of 2017.
-#This code randomly assings each susy folder a different point in the pMSSM
-#parameter space.
-#The program takes two arguments. First the name of the datafiel to be written,
-#and second the number of points to be generated. 
-#View Readme.txt for more info.
-#------------------------------------------------------------------------
+#!/usr/bin/env python
 
 import sys
 import numpy

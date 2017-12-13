@@ -9,9 +9,9 @@ SUSYHIT: https://www.itp.kit.edu/~maggie/SUSY-HIT/
 
 PROSPINO: http://www.thphys.uni-heidelberg.de/~plehn/index.php?show=prospino&visible=tools
 
-Next, unpack SUSYHIT into a folder in the user's working directory named "susyhit" and PROSPINO into a folder name "prospino" also in the user's working directory. Prospino is by default in a folder of its own named "on_the_web_10_17_14". The contents of this folder should be unpacked into the "prospino" directory so that the path is ~/prospino/files instead of ~/prospino/on_the_web_10_17_14/files.
+Next, unpack SUSYHIT into a folder in the user's home directory named "susyhit" and PROSPINO into a folder name "prospino" also in the user's home directory. Prospino is by default in a folder of its own named "on_the_web_10_17_14". The contents of this folder should be unpacked into the "prospino" directory so that the path is ~/prospino/files instead of ~/prospino/on_the_web_10_17_14/files.
 
-Finally, ensure that makedata.sh, datagroup.py, and pointchange.py are in the same working directory. All of the code, as well as the susyhit and prospino folders, should now be in the user's working directory.
+Finally, ensure that makedata.sh, datagroup.py, and pointchange.py are in the same working directory. 
 
 The program will now run and output data into the working directory. The program will not, however, output the values needed for pMSSM in its default state.
 
