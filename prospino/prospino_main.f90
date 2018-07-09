@@ -26,7 +26,7 @@ program main
 
 !----------------------------------------------------------------------------
   icoll_in = 1      ! collider : tevatron[0], lhc[1]                        !
-  energy_in = 14000 ! collider energy in GeV                                !
+  energy_in = 13000 ! collider energy in GeV                                !
 !----------------------------------------------------------------------------
 
 !----------------------------------------------------------------------------
@@ -106,18 +106,18 @@ program main
 !  flavors in final state: light-flavor quarks summed over five flavors     !
 !                                                                           !
 !----------------------------------------------------------------------------
-  
+
   call PROSPINO_OPEN_CLOSE(0)                                                            ! open all input/output files
-  
+
   call PROSPINO_CHECK_HIGGS(final_state_in)                                              ! lock Higgs final states
-  call PROSPINO_CHECK_FS(final_state_in,ipart1_in,ipart2_in,lfinal)                      ! check final state 
+  call PROSPINO_CHECK_FS(final_state_in,ipart1_in,ipart2_in,lfinal)                      ! check final state
   if (.not. lfinal ) then
      print*, " final state not correct ",final_state_in,ipart1_in,ipart2_in
      call HARD_STOP                                                                      ! finish if final state bad
   end if
 
   call PROSPINO(inlo,isq_ng_in,icoll_in,energy_in,i_error_in,final_state_in,ipart1_in,ipart2_in,isquark1_in,isquark2_in) ! actual prospino call
-        
+
 !----------------------------------------------------------------------------
 !  input file: prospino.in.leshouches                                       !
 !              use block MASS for masses, plus low-energy mixing matrices   !
@@ -126,8 +126,6 @@ program main
 !               prospino.dat2  for long output including subchannels        !
 !               prospino.dat3  lo file for masses, flags, etc               !
 !----------------------------------------------------------------------------
-  call PROSPINO_OPEN_CLOSE(1)                                                            ! close all input/output files 
+  call PROSPINO_OPEN_CLOSE(1)                                                            ! close all input/output files
 
 end program main
-
-
